@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Login | StreamVids{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="glass-card">
+        <div class="auth-header">
+            <h1 class="auth-title">Welcome Back</h1>
+            <p class="auth-subtitle">Log in to continue streaming.</p>
+        </div>
+        
+        <form method="POST" action="">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="username" class="form-label">Username or Email</label>
+                <input type="text" id="username" name="username" class="form-control" placeholder="Enter your username" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="••••••••" required>
+            </div>
+            
+            <div class="form-group" style="display: flex; justify-content: space-between; align-items: center;">
+                <label class="checkbox-group">
+                    <input type="checkbox" name="remember">
+                    <span>Remember me</span>
+                </label>
+                <a href="#" style="color: var(--accent); font-size: 0.9rem;">Forgot Password?</a>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem; padding: 0.8rem; font-size: 1.1rem;">
+                Sign In
+            </button>
+        </form>
+        
+        <div class="auth-footer">
+            Don't have an account? <a href="{% url 'register' %}">Sign Up</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
