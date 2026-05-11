@@ -1,10 +1,24 @@
-from django.shortcuts import render,redirect
-
-# Create your views here.
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate,login,logout
-from django.contrib.auth.decorators import login_required
 
+
+def home(request):
+    return render(request, 'home.html')
+
+
+def playback(request):
+    return render(request, 'playback.html')
+
+
+def profile(request):
+    return render(request, 'profile.html')
+
+
+def login_view(request):
+    return render(request, 'login.html')
+
+def upload(request):
+    return render(request, 'upload.html')
 
 
 def register(request):
@@ -14,9 +28,9 @@ def register(request):
         username = request.POST.get('username')
         email = request.POST.get('email')
         password = request.POST.get('password')
-        cpassword = request.POST.get('cpassword')
+        confirm_password = request.POST.get('confirm_password')
 
-        if password != cpassword:
+        if password != confirm_password:
             return redirect('register')
 
         User.objects.create_user(
@@ -25,7 +39,6 @@ def register(request):
             password=password
         )
 
-        return redirect('home')
+        return redirect('login')
 
-    return render(request,'register.html')
-
+    return render(request, 'register.html')
