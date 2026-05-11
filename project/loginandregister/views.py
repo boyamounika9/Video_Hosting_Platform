@@ -4,18 +4,12 @@ from django.contrib.auth import authenticate,login,logout
 
 
 
-def home(request):
-    return render(request, 'home.html')
-
-
 def playback(request):
     return render(request, 'playback.html')
 
 
 def profile(request):
     return render(request, 'profile.html')
-
-
 
 
 def register(request):

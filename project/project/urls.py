@@ -22,8 +22,9 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('upload/', include('videoupload.urls')),
+    path('', include('videoupload.urls')),
     path('',include('loginandregister.urls')),
+    path('',include('homepage.urls')),
 ]
 
 # Serve uploaded media files during development
