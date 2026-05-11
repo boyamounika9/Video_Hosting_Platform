@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from .models import VideoData
 from django.contrib.auth.decorators import login_required
 
-# @login_required
+@login_required
 def VideoUpload(request):
 
     if request.method == 'POST':
