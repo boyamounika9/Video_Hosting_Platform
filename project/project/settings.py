@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'videoupload',
     'loginandregister',
     'homepage',
+    'profile_page',
 ]
 
 MIDDLEWARE = [

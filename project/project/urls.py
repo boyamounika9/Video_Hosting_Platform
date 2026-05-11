@@ -25,6 +25,8 @@ urlpatterns = [
     path('', include('videoupload.urls')),
     path('',include('loginandregister.urls')),
     path('',include('homepage.urls')),
+    path('',include('profile_page.urls')),
+
 ]
 
 # Serve uploaded media files during development
