@@ -16,11 +16,6 @@ def profile(request):
     return render(request, 'profile.html')
 
 
-def login_view(request):
-    return render(request, 'login.html')
-
-def upload(request):
-    return render(request, 'upload.html')
 
 
 def register(request):
