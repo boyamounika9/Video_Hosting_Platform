@@ -11,11 +11,11 @@
             <p class="auth-subtitle">Log in to continue streaming.</p>
         </div>
         
-        <form method="POST" action="">
+        <form method="POST" >
             {% csrf_token %}
             
             <div class="form-group">
-                <label for="username" class="form-label">Username or Email</label>
+                <label for="username" class="form-label">Username </label>
                 <input type="text" id="username" name="username" class="form-control" placeholder="Enter your username" required>
             </div>
             
