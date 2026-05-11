@@ -4,73 +4,139 @@
 {% block title %}User Profile | StreamVids{% endblock %}
 
 {% block content %}
+
 <div class="container">
-    
+
     <!-- Profile Header -->
     <div class="profile-header">
+
+        <!-- Profile Image -->
         <div class="profile-picture">
-            <img src="https://ui-avatars.com/api/?name=John+Doe&size=200&background=e50914&color=fff" alt="Profile Picture">
+            <img src="https://ui-avatars.com/api/?name={{ request.user.username }}&size=200&background=e50914&color=fff" alt="Profile Picture">
         </div>
-        
+
+        <!-- Profile Info -->
         <div class="profile-info" style="flex-grow: 1;">
-            <h1>John Doe</h1>
-            <p>@johndoe_creator</p>
-            <p style="max-width: 600px; margin-bottom: 1.5rem;">Filmmaker, developer, and content creator. I make videos about coding, tech reviews, and cinematic vlogs. Join the journey!</p>
-            
+
+            <h1>{{ request.user.username }}</h1>
+
+            <p>@{{ request.user.username }}</p>
+
+            <p style="max-width: 600px; margin-bottom: 1.5rem;">
+                Welcome to {{ request.user.username }}'s profile.
+            </p>
+
+            <!-- Stats -->
             <div class="stats-container">
+
                 <div class="stat-item">
                     <span class="stat-value">124</span>
                     <span class="stat-label">Videos</span>
                 </div>
+
                 <div class="stat-item">
                     <span class="stat-value">45.2K</span>
                     <span class="stat-label">Subscribers</span>
                 </div>
+
                 <div class="stat-item">
                     <span class="stat-value">1.2M</span>
                     <span class="stat-label">Total Views</span>
                 </div>
+
             </div>
+
         </div>
-        
+
+        <!-- Buttons -->
         <div style="display: flex; flex-direction: column; gap: 1rem; align-items: center;">
-            <button class="btn btn-primary" style="width: 100%;">Subscribe</button>
-            <button class="btn btn-outline" style="width: 100%;">Edit Profile</button>
+
+            <button class="btn btn-primary" style="width: 100%;">
+                Subscribe
+            </button>
+
+            <button class="btn btn-outline" style="width: 100%;">
+                Edit Profile
+            </button>
+
         </div>
+
     </div>
-    
-    <!-- Profile Tabs -->
+
+    <!-- Tabs -->
     <div style="border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 2rem;">
+
         <ul style="display: flex; gap: 2rem;">
-            <li style="padding: 1rem 0; border-bottom: 2px solid var(--accent); font-weight: 500;">Videos</li>
-            <li style="padding: 1rem 0; color: var(--text-secondary); cursor: pointer;">Playlists</li>
-            <li style="padding: 1rem 0; color: var(--text-secondary); cursor: pointer;">Community</li>
-            <li style="padding: 1rem 0; color: var(--text-secondary); cursor: pointer;">About</li>
+
+            <li style="padding: 1rem 0; border-bottom: 2px solid red; font-weight: 500;">
+                Videos
+            </li>
+
+            <li style="padding: 1rem 0; color: gray; cursor: pointer;">
+                Playlists
+            </li>
+
+            <li style="padding: 1rem 0; color: gray; cursor: pointer;">
+                Community
+            </li>
+
+            <li style="padding: 1rem 0; color: gray; cursor: pointer;">
+                About
+            </li>
+
         </ul>
+
     </div>
-    
-    <!-- Uploaded Videos Grid -->
+
+    <!-- Uploads -->
     <h2 class="section-title">Uploads</h2>
+
     <div class="video-grid">
+
         {% for i in '12345678'|make_list %}
+
         <article class="video-card">
+
             <a href="{% url 'playback' %}" class="video-thumbnail-container">
-                <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&q=80" alt="Video Thumbnail" class="video-thumbnail">
-                <span class="video-duration">14:05</span>
+
+                <img 
+                    src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&q=80"
+                    alt="Video Thumbnail"
+                    class="video-thumbnail"
+                >
+
+                <span class="video-duration">
+                    14:05
+                </span>
+
             </a>
+
             <div class="video-info">
-                <!-- No avatar needed since it's the user's own channel -->
+
                 <div class="video-details">
-                    <a href="{% url 'playback' %}" class="video-title">Building a Retro Gaming Console with Raspberry Pi</a>
+
+                    <a href="{% url 'playback' %}" class="video-title">
+                        Building a Retro Gaming Console with Raspberry Pi
+                    </a>
+
                     <div class="video-meta" style="margin-top: 0.3rem;">
+
                         <span>12K views</span>
+
                         <span>1 month ago</span>
+
                     </div>
+
                 </div>
+
             </div>
+
         </article>
+
         {% endfor %}
+
     </div>
-    
+
 </div>
+
 {% endblock %}
