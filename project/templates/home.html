@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home | StreamVids{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="container">
+    <section class="hero">
+        <div class="hero-content">
+            <span class="hero-tag">Premium Exclusives</span>
+            <h1 class="hero-title">Unlimited streaming.<br>Zero interruptions.</h1>
+            <p class="hero-desc">Watch premium content anywhere, anytime. Join the community and discover amazing videos created by talented creators from all around the world.</p>
+            <div class="hero-actions" style="display: flex; gap: 1rem;">
+                <a href="{% url 'register' %}" class="btn btn-primary" style="font-size: 1.1rem; padding: 0.8rem 1.5rem;">Start Watching</a>
+                <a href="#trending" class="btn btn-outline" style="font-size: 1.1rem; padding: 0.8rem 1.5rem;">Browse Trending</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trending Videos Section -->
+    <section id="trending">
+        <h2 class="section-title">Trending Now</h2>
+        <div class="video-grid">
+            <!-- Simulated loop for trending videos -->
+            {% for i in '123456'|make_list %}
+            <article class="video-card">
+                <a href="{% url 'playback' %}" class="video-thumbnail-container">
+                    <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=600&q=80" alt="Video Thumbnail" class="video-thumbnail">
+                    <span class="video-duration">12:34</span>
+                </a>
+                <div class="video-info">
+                    <a href="{% url 'profile' %}" class="video-author-avatar">
+                        <img src="https://ui-avatars.com/api/?name=Creator+{{ i }}&background=212121&color=fff" alt="Avatar">
+                    </a>
+                    <div class="video-details">
+                        <a href="{% url 'playback' %}" class="video-title">The Ultimate Guide to Cinematic Filmmaking in 2024</a>
+                        <div class="video-meta">
+                            <a href="{% url 'profile' %}" class="video-author-name">Creator Name</a>
+                        </div>
+                        <div class="video-meta">
+                            <span>1.2M views</span>
+                            <span>2 days ago</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Recently Uploaded Section -->
+    <section id="recent" style="margin-top: 4rem;">
+        <h2 class="section-title">Recently Uploaded</h2>
+        <div class="video-grid">
+            {% for i in '123456'|make_list %}
+            <article class="video-card">
+                <a href="{% url 'playback' %}" class="video-thumbnail-container">
+                    <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&q=80" alt="Video Thumbnail" class="video-thumbnail">
+                    <span class="video-duration">08:15</span>
+                </a>
+                <div class="video-info">
+                    <a href="{% url 'profile' %}" class="video-author-avatar">
+                        <img src="https://ui-avatars.com/api/?name=User+{{ i }}&background=212121&color=fff" alt="Avatar">
+                    </a>
+                    <div class="video-details">
+                        <a href="{% url 'playback' %}" class="video-title">Building a Fullstack App from Scratch</a>
+                        <div class="video-meta">
+                            <a href="{% url 'profile' %}" class="video-author-name">CodeMaster</a>
+                        </div>
+                        <div class="video-meta">
+                            <span>54K views</span>
+                            <span>4 hours ago</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+{% endblock %}
