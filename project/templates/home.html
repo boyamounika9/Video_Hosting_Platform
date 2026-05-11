@@ -23,10 +23,10 @@
         <h2 class="section-title">Trending Now</h2>
         <div class="video-grid">
             <!-- Simulated loop for trending videos -->
-            {% for i in '123456'|make_list %}
+            {% for i in videos %}
             <article class="video-card">
                 <a href="{% url 'playback' %}" class="video-thumbnail-container">
-                    <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=600&q=80" alt="Video Thumbnail" class="video-thumbnail">
+                    <img src="{{ i.thumbnail.url }}" alt="Video Thumbnail" class="video-thumbnail">
                     <span class="video-duration">12:34</span>
                 </a>
                 <div class="video-info">
@@ -34,9 +34,9 @@
                         <img src="https://ui-avatars.com/api/?name=Creator+{{ i }}&background=212121&color=fff" alt="Avatar">
                     </a>
                     <div class="video-details">
-                        <a href="{% url 'playback' %}" class="video-title">The Ultimate Guide to Cinematic Filmmaking in 2024</a>
+                        <a href="{% url 'playback' %}" class="video-title">{{ i.title }}</a>
                         <div class="video-meta">
-                            <a href="{% url 'profile' %}" class="video-author-name">Creator Name</a>
+                            <a href="{% url 'profile' %}" class="video-author-name">{{ i.uploaded_by.username }}</a>
                         </div>
                         <div class="video-meta">
                             <span>1.2M views</span>
@@ -53,20 +53,20 @@
     <section id="recent" style="margin-top: 4rem;">
         <h2 class="section-title">Recently Uploaded</h2>
         <div class="video-grid">
-            {% for i in '123456'|make_list %}
+            {% for i in videos %}
             <article class="video-card">
                 <a href="{% url 'playback' %}" class="video-thumbnail-container">
-                    <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&q=80" alt="Video Thumbnail" class="video-thumbnail">
+                    <img src="{{i.thumbnail.url}}" alt="Video Thumbnail" class="video-thumbnail">
                     <span class="video-duration">08:15</span>
                 </a>
                 <div class="video-info">
                     <a href="{% url 'profile' %}" class="video-author-avatar">
-                        <img src="https://ui-avatars.com/api/?name=User+{{ i }}&background=212121&color=fff" alt="Avatar">
+                        <img src="https://ui-avatars.com/api/?name=User+{{ i.video_file }}&background=212121&color=fff" alt="Avatar">
                     </a>
                     <div class="video-details">
-                        <a href="{% url 'playback' %}" class="video-title">Building a Fullstack App from Scratch</a>
+                        <a href="{% url 'playback' %}" class="video-title">{{i.title}}</a>
                         <div class="video-meta">
-                            <a href="{% url 'profile' %}" class="video-author-name">CodeMaster</a>
+                            <a href="{% url 'profile' %}" class="video-author-name">{{ i.uploaded_by.username }}</a>
                         </div>
                         <div class="video-meta">
                             <span>54K views</span>
