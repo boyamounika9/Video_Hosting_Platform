@@ -89,18 +89,19 @@
     </div>
 
     <!-- Uploads -->
+     
     <h2 class="section-title">Uploads</h2>
 
     <div class="video-grid">
 
-        {% for i in '12345678'|make_list %}
+        {% for i in Videos %}
 
         <article class="video-card">
 
             <a href="{% url 'playback' %}" class="video-thumbnail-container">
 
                 <img 
-                    src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&q=80"
+                    src="{{ i.thumbnail.url }}"
                     alt="Video Thumbnail"
                     class="video-thumbnail"
                 >
@@ -116,7 +117,7 @@
                 <div class="video-details">
 
                     <a href="{% url 'playback' %}" class="video-title">
-                        Building a Retro Gaming Console with Raspberry Pi
+                        {{ i.title }}
                     </a>
 
                     <div class="video-meta" style="margin-top: 0.3rem;">

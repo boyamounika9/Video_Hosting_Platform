@@ -8,10 +8,6 @@ def playback(request):
     return render(request, 'playback.html')
 
 
-def profile(request):
-    return render(request, 'profile.html')
-
-
 def register(request):
 
     if request.method == 'POST':
