@@ -28,6 +28,14 @@ urlpatterns = [
     path('profile/',views.profile,name='profile'),
     path('register/',views.register,name='register'),
     path('upload/', include('videoupload.urls')),
+
+
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('',include('loginandregister.urls')),
+
+
 ]
 
 # Serve uploaded media files during development
