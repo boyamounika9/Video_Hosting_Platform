@@ -4,9 +4,6 @@ from django.contrib.auth import authenticate,login,logout
 
 
 
-def playback(request):
-    return render(request, 'playback.html')
-
 
 def register(request):
 
