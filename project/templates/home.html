@@ -55,7 +55,7 @@
         <div class="video-grid">
             {% for i in videos %}
             <article class="video-card">
-                <a href="{% url 'playback' %}" class="video-thumbnail-container">
+                <a href="{% url 'playback' i.id %}" class="video-thumbnail-container">
                     <img src="{{i.thumbnail.url}}" alt="Video Thumbnail" class="video-thumbnail">
                     <span class="video-duration">08:15</span>
                 </a>
@@ -64,7 +64,7 @@
                         <img src="https://ui-avatars.com/api/?name=User+{{ i.video_file }}&background=212121&color=fff" alt="Avatar">
                     </a>
                     <div class="video-details">
-                        <a href="{% url 'playback' %}" class="video-title">{{i.title}}</a>
+                        <a href="{% url 'playback' i.id %}" class="video-title">{{i.title}}</a>
                         <div class="video-meta">
                             <a href="{% url 'profile' %}" class="video-author-name">{{ i.uploaded_by.username }}</a>
                         </div>
