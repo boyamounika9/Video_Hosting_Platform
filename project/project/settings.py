@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'loginandregister',
     'homepage',
     'profile_page',
+    'forgotpassword',
     'videoplayback',
 ]
 
