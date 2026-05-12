@@ -29,8 +29,11 @@
                     <input type="checkbox" name="remember">
                     <span>Remember me</span>
                 </label>
-                <a href="#" style="color: var(--accent); font-size: 0.9rem;">Forgot Password?</a>
-            </div>
+                <a href="{% url 'forgot_password' %}" 
+                style="color: var(--accent); font-size: 0.9rem;">
+                Forgot Password?
+                </a>            
+                </div>
             
             <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem; padding: 0.8rem; font-size: 1.1rem;">
                 Sign In
