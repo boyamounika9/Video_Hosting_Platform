@@ -27,7 +27,7 @@ urlpatterns = [
     path('',include('homepage.urls')),
     path('profile/', include('profile_page.urls')),
     path('forgotpassword/',include('forgotpassword.urls'))
-
+    path('', include('videoplayback.urls')),
 ]
 
 # Serve uploaded media files during development

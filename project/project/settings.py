@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'homepage',
     'profile_page',
     'forgotpassword',
+    'videoplayback',
 ]
 
 MIDDLEWARE = [
