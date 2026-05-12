@@ -10,6 +10,7 @@ def profile(request):
 
     videos = VideoData.objects.filter(uploaded_by=current_user)
 
+#for video count in profile page
     video_count = videos.count()
 
     return render(request, 'profile.html', {
