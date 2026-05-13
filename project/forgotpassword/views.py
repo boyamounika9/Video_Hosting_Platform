@@ -8,13 +8,13 @@ def forgot_password(request):
 
     if request.method == 'POST':
 
-        username = request.POST.get('username')
+        email = request.POST.get('email')
 
         new_password = request.POST.get('new_password')
 
         try:
 
-            user = User.objects.get(username=username)
+            user = User.objects.get(email=email)
 
             user.set_password(new_password)
 
