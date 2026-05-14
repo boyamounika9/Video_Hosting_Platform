@@ -56,14 +56,14 @@
 
                         </div>
 
-                        <button class="btn btn-primary"
+                        {% comment %} <button class="btn btn-primary"
                                 style="margin-left: 1rem;">
                             Subscribe
-                        </button>
+                        </button> {% endcomment %}
 
                     </div>
                     
-                    <div class="playback-buttons">
+                    {% comment %} <div class="playback-buttons">
 
                         <button class="btn btn-secondary">
                             Like
@@ -73,26 +73,63 @@
                             Share
                         </button>
 
-                    </div>
+                    </div> {% endcomment %}
 
                 </div>
                 
-                <div class="playback-description">
+                <div class="playback-description" id="playback-description-container" style="cursor: pointer; transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='rgba(255, 255, 255, 0.08)'" onmouseout="this.style.backgroundColor='rgba(255, 255, 255, 0.03)'">
 
                     <p style="font-weight: 600; margin-bottom: 0.5rem;">
                         Uploaded on {{ video.upload_time }}
                     </p>
 
-                    <p>
-                        {{ video.description }}
-                    </p>
+                    <div id="description-content" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 0;">
+                        {{ video.description|urlize|linebreaksbr }}
+                    </div>
+
+                    <div id="description-toggle" style="font-weight: 600; margin-top: 0.5rem; display: none;">
+                        Show more
+                    </div>
 
                 </div>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const container = document.getElementById('playback-description-container');
+                        const content = document.getElementById('description-content');
+                        const toggle = document.getElementById('description-toggle');
+                        let isExpanded = false;
+
+                        // Give browser time to render before checking if text overflows
+                        setTimeout(() => {
+                            if (content.scrollHeight > content.clientHeight) {
+                                toggle.style.display = 'block';
+                            }
+                        }, 100);
+
+                        container.addEventListener('click', function(e) {
+                            // Don't expand if clicking on links within the description (if any were added)
+                            if (e.target.tagName.toLowerCase() === 'a') return;
+                            
+                            // If not expandable and not expanded, do nothing
+                            if (toggle.style.display === 'none' && !isExpanded) return;
+
+                            isExpanded = !isExpanded;
+                            if (isExpanded) {
+                                content.style.webkitLineClamp = 'unset';
+                                toggle.textContent = 'Show less';
+                            } else {
+                                content.style.webkitLineClamp = '3';
+                                toggle.textContent = 'Show more';
+                            }
+                        });
+                    });
+                </script>
 
             </div>
             
             <!-- Comments Section -->
-            <div style="margin-top: 2rem;">
+            {% comment %} <div style="margin-top: 2rem;">
 
                 <h3 style="margin-bottom: 1.5rem;">
                     Comments
@@ -121,7 +158,7 @@
 
                 </div>
 
-            </div>
+            </div> {% endcomment %}
 
         </div>
         

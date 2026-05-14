@@ -31,33 +31,10 @@
 
                 <div class="stat-item">
                     <span class="stat-value">{{ video_count }}</span>
-                    <span class="stat-label">Videos</span>
-                </div>
-
-                <div class="stat-item">
-                    <span class="stat-value">45.2K</span>
-                    <span class="stat-label">Subscribers</span>
-                </div>
-
-                <div class="stat-item">
-                    <span class="stat-value">1.2M</span>
-                    <span class="stat-label">Total Views</span>
+                    <span class="stat-label">Video{{ video_count|pluralize }}</span>
                 </div>
 
             </div>
-
-        </div>
-
-        <!-- Buttons -->
-        <div style="display: flex; flex-direction: column; gap: 1rem; align-items: center;">
-
-            <button class="btn btn-primary" style="width: 100%;">
-                Subscribe
-            </button>
-
-            <button class="btn btn-outline" style="width: 100%;">
-                Edit Profile
-            </button>
 
         </div>
 
@@ -106,9 +83,13 @@
                     class="video-thumbnail"
                 >
 
-                <span class="video-duration">
-                    14:05
-                </span>
+                <span class="video-duration" id="duration-profile-{{ i.id }}">--:--</span>
+                <video preload="metadata" src="{{ i.video_file.url }}" style="display: none;" onloadedmetadata="
+                    let d = this.duration;
+                    let m = Math.floor(d / 60);
+                    let s = Math.floor(d % 60);
+                    document.getElementById('duration-profile-{{ i.id }}').innerText = m + ':' + (s < 10 ? '0' : '') + s;
+                "></video>
 
             </a>
 
@@ -122,9 +103,7 @@
 
                     <div class="video-meta" style="margin-top: 0.3rem;">
 
-                        <span>12K views</span>
-
-                        <span>1 month ago</span>
+                        <span>{{ i.upload_time|timesince }} ago</span>
 
                     </div>
 

@@ -6,7 +6,7 @@
 {% block content %}
 <!-- Hero Section -->
 <div class="container">
-    <section class="hero">
+    {% comment %} <section class="hero">
         <div class="hero-content">
             <span class="hero-tag">Premium Exclusives</span>
             <h1 class="hero-title">Unlimited streaming.<br>Zero interruptions.</h1>
@@ -16,7 +16,7 @@
                 <a href="#trending" class="btn btn-outline" style="font-size: 1.1rem; padding: 0.8rem 1.5rem;">Browse Trending</a>
             </div>
         </div>
-    </section>
+    </section> {% endcomment %}
 
     {% comment %} <!-- Trending Videos Section -->
     <section id="trending">
@@ -57,20 +57,23 @@
             <article class="video-card">
                 <a href="{% url 'playback' i.id %}" class="video-thumbnail-container">
                     <img src="{{i.thumbnail.url}}" alt="Video Thumbnail" class="video-thumbnail">
-                    <span class="video-duration">08:15</span>
+                    <span class="video-duration" id="duration-home-{{ i.id }}">--:--</span>
+                    <video preload="metadata" src="{{ i.video_file.url }}" style="display: none;" onloadedmetadata="
+                        let d = this.duration;
+                        let m = Math.floor(d / 60);
+                        let s = Math.floor(d % 60);
+                        document.getElementById('duration-home-{{ i.id }}').innerText = m + ':' + (s < 10 ? '0' : '') + s;
+                    "></video>
                 </a>
                 <div class="video-info">
                     <a href="{% url 'profile' %}" class="video-author-avatar">
-                        <img src="https://ui-avatars.com/api/?name=User+{{ i.video_file }}&background=212121&color=fff" alt="Avatar">
+                        <img src="https://ui-avatars.com/api/?name={{ i.uploaded_by.username }}&background=e50914&color=fff" alt="Avatar">
                     </a>
                     <div class="video-details">
                         <a href="{% url 'playback' i.id %}" class="video-title">{{i.title}}</a>
                         <div class="video-meta">
-                            <a href="{% url 'profile' %}" class="video-author-name">{{ i.uploaded_by.username }}</a>
-                        </div>
-                        <div class="video-meta">
-                            <span>54K views</span>
-                            <span>4 hours ago</span>
+                            <span><a href="{% url 'profile' %}" class="video-author-name">{{ i.uploaded_by.username }}</a></span>
+                            <span>{{ i.upload_time|timesince }} ago</span>
                         </div>
                     </div>
                 </div>

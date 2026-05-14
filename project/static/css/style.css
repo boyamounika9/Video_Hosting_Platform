@@ -603,6 +603,15 @@ h1, h2, h3, h4, h5, h6 {
     margin-top: 1rem;
 }
 
+#description-content a {
+    color: #3ea6ff;
+    text-decoration: none;
+}
+
+#description-content a:hover {
+    text-decoration: underline;
+}
+
 .sidebar-title {
     font-size: 1.2rem;
     margin-bottom: 1.5rem;
@@ -723,7 +732,7 @@ h1, h2, h3, h4, h5, h6 {
    ========================================================================== */
 .footer {
     background-color: var(--bg-secondary);
-    padding: 3rem 0;
+    padding: 1.5rem 0;
     margin-top: auto;
     border-top: 1px solid rgba(255,255,255,0.05);
 }
@@ -756,9 +765,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .footer-bottom {
     text-align: center;
-    padding-top: 2rem;
-    margin-top: 2rem;
-    border-top: 1px solid rgba(255,255,255,0.05);
     color: var(--text-secondary);
     font-size: 0.9rem;
 }

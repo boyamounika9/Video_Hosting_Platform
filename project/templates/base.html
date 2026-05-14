@@ -5,9 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Video Streaming Website{% endblock %}</title>
-
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=1.2">
+    <!-- Include icons like FontAwesome here if permitted, but strictly HTML/CSS means we can use HTML entities or SVG inline -->
 </head>
 
 <body>
@@ -43,7 +42,6 @@
 
             <!-- NAV LINKS -->
             <ul class="nav-links">
-
                 <li>
                     <a href="{% url 'home' %}" class="nav-link active">
                         Home
@@ -67,7 +65,6 @@
                         Library
                     </a>
                 </li>
-
             </ul>
 
             <!-- RIGHT SIDE -->
@@ -184,7 +181,6 @@
     <footer class="footer">
 
         <div class="container">
-
             <div class="footer-content">
 
                 <!-- FOOTER LOGO -->
