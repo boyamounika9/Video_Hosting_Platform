@@ -42,18 +42,31 @@ def register(request):
     return render(request, 'register.html')
 
 
-def login_view(request):
-    if request.method=="POST":
-        username=request.POST.get('username')
-        password=request.POST.get('password')
-        user=authenticate(request,username=username,password=password)
-        if user is not None:
-            login(request,user)
-            return redirect('home')
-        else:
-            return redirect('register')
-    return render(request,'login.html')
+def login_page(request):
 
-def logout_view(request):
-    logout(request)
-    return redirect('login')
+    if request.method == 'POST':
+
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(
+            request,
+            username=username,
+            password=password
+        )
+
+        if user is not None:
+
+            login(request, user)
+
+            messages.success(request, 'Login Successful')
+
+            return redirect('home')
+
+        else:
+
+            messages.error(request, 'Invalid Username or Password')
+
+            return redirect('login')
+
+    return render(request, 'login.html')
