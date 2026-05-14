@@ -42,7 +42,7 @@ def register(request):
     return render(request, 'register.html')
 
 
-def login_page(request):
+def login_view(request):
 
     if request.method == 'POST':
 
@@ -70,3 +70,7 @@ def login_page(request):
             return redirect('login')
 
     return render(request, 'login.html')
+
+def logout_view(request):
+    logout(request)
+    return redirect('login')
