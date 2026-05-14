@@ -22,12 +22,12 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',views.home,name='home'),
-    path('login/',views.login,name='login'),
-    path('playback/',views.playback,name='playback'),
-    path('profile/',views.profile,name='profile'),
-    path('register/',views.register,name='register'),
-    path('upload/', include('videoupload.urls')),
+    path('', include('videoupload.urls')),
+    path('',include('loginandregister.urls')),
+    path('',include('homepage.urls')),
+    path('profile/', include('profile_page.urls')),
+    path('forgotpassword/',include('forgotpassword.urls')),
+    path('', include('videoplayback.urls')),
 ]
 
 # Serve uploaded media files during development

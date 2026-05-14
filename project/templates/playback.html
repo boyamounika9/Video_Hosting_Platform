@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Video Playback | StreamVids{% endblock %}
+{% block title %}{{ video.title }} | StreamVids{% endblock %}
 
 {% block content %}
 <div class="container">
@@ -9,119 +9,205 @@
         
         <!-- Main Video Area -->
         <div class="main-video">
+
             <div class="video-player-wrapper">
-                <!-- Using a standard HTML5 video player -->
-                <video class="video-player" controls poster="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1280&q=80">
-                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+
+                <video class="video-player"
+                       controls
+                       poster="{{ video.thumbnail.url }}">
+
+                    <source src="{{ video.video_file.url }}"
+                            type="video/mp4">
+
                     Your browser does not support the video tag.
+
                 </video>
+
             </div>
             
             <div class="playback-info">
-                <h1 class="playback-title">The Ultimate Guide to Cinematic Filmmaking in 2024</h1>
+
+                <h1 class="playback-title">
+                    {{ video.title }}
+                </h1>
                 
                 <div class="playback-actions">
+
                     <div class="playback-author">
-                        <a href="{% url 'profile' %}" class="profile-avatar" style="width: 48px; height: 48px;">
-                            <img src="https://ui-avatars.com/api/?name=Creator+Name&background=e50914&color=fff" alt="Avatar">
+
+                        <a href="{% url 'profile' %}"
+                           class="profile-avatar"
+                           style="width: 48px; height: 48px;">
+
+                            <img src="https://ui-avatars.com/api/?name={{ video.uploaded_by.username }}&background=e50914&color=fff"
+                                 alt="Avatar">
+
                         </a>
+
                         <div class="playback-author-info">
-                            <h4><a href="{% url 'profile' %}">Creator Name</a></h4>
-                            <p>1.2M subscribers</p>
+
+                            <h4>
+                                <a href="{% url 'profile' %}">
+                                    {{ video.uploaded_by.username }}
+                                </a>
+                            </h4>
+
+                            <p>Content Creator</p>
+
                         </div>
-                        <button class="btn btn-primary" style="margin-left: 1rem;">Subscribe</button>
+
+                        {% comment %} <button class="btn btn-primary"
+                                style="margin-left: 1rem;">
+                            Subscribe
+                        </button> {% endcomment %}
+
                     </div>
                     
-                    <div class="playback-buttons">
+                    {% comment %} <div class="playback-buttons">
+
                         <button class="btn btn-secondary">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 5px;"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
-                            245K
+                            Like
                         </button>
+
                         <button class="btn btn-secondary">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 5px;"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
                             Share
                         </button>
-                        <button class="btn btn-secondary">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
-                        </button>
-                    </div>
+
+                    </div> {% endcomment %}
+
                 </div>
                 
-                <div class="playback-description">
-                    <p style="font-weight: 600; margin-bottom: 0.5rem;">1,204,453 views • Premiered Oct 12, 2024</p>
-                    <p>In this comprehensive guide, we cover everything you need to know about cinematic filmmaking in 2024. From choosing the right camera and lenses to advanced lighting techniques and color grading.</p>
-                    <br>
-                    <p>Timestamps:</p>
-                    <p style="color: var(--accent);">0:00 - Introduction</p>
-                    <p style="color: var(--accent);">2:15 - Camera Gear</p>
-                    <p style="color: var(--accent);">8:40 - Lighting Setups</p>
-                    <p style="color: var(--accent);">15:20 - Color Grading</p>
+                <div class="playback-description" id="playback-description-container" style="cursor: pointer; transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='rgba(255, 255, 255, 0.08)'" onmouseout="this.style.backgroundColor='rgba(255, 255, 255, 0.03)'">
+
+                    <p style="font-weight: 600; margin-bottom: 0.5rem;">
+                        Uploaded on {{ video.upload_time }}
+                    </p>
+
+                    <div id="description-content" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 0;">
+                        {{ video.description|urlize|linebreaksbr }}
+                    </div>
+
+                    <div id="description-toggle" style="font-weight: 600; margin-top: 0.5rem; display: none;">
+                        Show more
+                    </div>
+
                 </div>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const container = document.getElementById('playback-description-container');
+                        const content = document.getElementById('description-content');
+                        const toggle = document.getElementById('description-toggle');
+                        let isExpanded = false;
+
+                        // Give browser time to render before checking if text overflows
+                        setTimeout(() => {
+                            if (content.scrollHeight > content.clientHeight) {
+                                toggle.style.display = 'block';
+                            }
+                        }, 100);
+
+                        container.addEventListener('click', function(e) {
+                            // Don't expand if clicking on links within the description (if any were added)
+                            if (e.target.tagName.toLowerCase() === 'a') return;
+                            
+                            // If not expandable and not expanded, do nothing
+                            if (toggle.style.display === 'none' && !isExpanded) return;
+
+                            isExpanded = !isExpanded;
+                            if (isExpanded) {
+                                content.style.webkitLineClamp = 'unset';
+                                toggle.textContent = 'Show less';
+                            } else {
+                                content.style.webkitLineClamp = '3';
+                                toggle.textContent = 'Show more';
+                            }
+                        });
+                    });
+                </script>
+
             </div>
             
             <!-- Comments Section -->
-            <div style="margin-top: 2rem;">
-                <h3 style="margin-bottom: 1.5rem;">4,281 Comments</h3>
-                
-                <!-- Comment Input -->
+            {% comment %} <div style="margin-top: 2rem;">
+
+                <h3 style="margin-bottom: 1.5rem;">
+                    Comments
+                </h3>
+
                 <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+
                     <div class="profile-avatar" style="flex-shrink: 0;">
-                        <img src="https://ui-avatars.com/api/?name=Current+User&background=212121&color=fff" alt="User">
+                        <img src="https://ui-avatars.com/api/?name=Current+User&background=212121&color=fff"
+                             alt="User">
                     </div>
+
                     <div style="flex-grow: 1;">
-                        <input type="text" class="form-control" style="background: transparent; border: none; border-bottom: 1px solid rgba(255,255,255,0.2); border-radius: 0; padding-left: 0; padding-right: 0;" placeholder="Add a comment...">
-                        <div style="display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 0.5rem;">
-                            <button class="btn btn-outline" style="padding: 0.4rem 1rem;">Cancel</button>
-                            <button class="btn btn-primary" style="padding: 0.4rem 1rem;">Comment</button>
-                        </div>
+
+                        <input type="text"
+                               class="form-control"
+                               style="background: transparent;
+                                      border: none;
+                                      border-bottom: 1px solid rgba(255,255,255,0.2);
+                                      border-radius: 0;
+                                      padding-left: 0;
+                                      padding-right: 0;"
+                               placeholder="Add a comment...">
+
                     </div>
+
                 </div>
-                
-                <!-- Comments List -->
-                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-                    {% for i in '123'|make_list %}
-                    <div style="display: flex; gap: 1rem;">
-                        <div class="profile-avatar" style="flex-shrink: 0;">
-                            <img src="https://ui-avatars.com/api/?name=User+{{ i }}&background=383838&color=fff" alt="User">
-                        </div>
-                        <div>
-                            <div style="display: flex; align-items: baseline; gap: 0.5rem; margin-bottom: 0.3rem;">
-                                <span style="font-weight: 500;">UserName{{ i }}</span>
-                                <span style="font-size: 0.8rem; color: var(--text-secondary);">2 days ago</span>
-                            </div>
-                            <p style="font-size: 0.95rem; margin-bottom: 0.5rem;">This tutorial completely changed the way I light my scenes. Thank you so much for the detailed breakdown!</p>
-                            <div style="display: flex; align-items: center; gap: 1rem; color: var(--text-secondary);">
-                                <span style="cursor: pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg> 24</span>
-                                <span style="cursor: pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-3"></path></svg></span>
-                                <span style="font-size: 0.85rem; font-weight: 500; cursor: pointer;">Reply</span>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
+
+            </div> {% endcomment %}
+
         </div>
         
         <!-- Sidebar Suggested Videos -->
         <div class="sidebar">
-            <h3 class="sidebar-title">Up Next</h3>
+
+            <h3 class="sidebar-title">
+                Up Next
+            </h3>
+
             <div class="suggested-videos">
-                {% for i in '12345678'|make_list %}
+
+                {% for i in suggested_videos %}
+
                 <article class="suggested-card">
-                    <a href="{% url 'playback' %}" class="suggested-thumbnail">
-                        <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=400&q=80" alt="Thumbnail">
-                        <span class="video-duration" style="font-size: 0.7rem;">05:22</span>
+
+                    <a href="{% url 'playback' i.id %}"
+                       class="suggested-thumbnail">
+
+                        <img src="{{ i.thumbnail.url }}"
+                             alt="Thumbnail">
+
                     </a>
+
                     <div class="suggested-info">
-                        <a href="{% url 'playback' %}" class="suggested-title">Color Grading Secrets of Hollywood Movies</a>
-                        <a href="{% url 'profile' %}" class="suggested-meta" style="margin-bottom: 0.2rem;">Creator Name</a>
-                        <div class="suggested-meta">
-                            <span>800K views</span> • <span>1 week ago</span>
-                        </div>
+
+                        <a href="{% url 'playback' i.id %}"
+                           class="suggested-title">
+
+                            {{ i.title }}
+
+                        </a>
+
+                        <a href="{% url 'profile' %}"
+                           class="suggested-meta"
+                           style="margin-bottom: 0.2rem;">
+
+                            {{ i.uploaded_by.username }}
+
+                        </a>
+
                     </div>
+
                 </article>
+
                 {% endfor %}
+
             </div>
+
         </div>
         
     </div>

@@ -11,7 +11,7 @@
             <p class="auth-subtitle">Join the premium streaming community.</p>
         </div>
         
-        <form method="POST" action="">
+        <form method="POST" >
             {% csrf_token %}
             
             <div class="form-group">
@@ -31,8 +31,7 @@
             
             <div class="form-group">
                 <label for="confirm_password" class="form-label">Confirm Password</label>
-                <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="Repeat your password" required>
-            </div>
+                <input type="password" id="confirm_password" name="cpassword" class="form-control" placeholder="Repeat your password" required>
             
             <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem; padding: 0.8rem; font-size: 1.1rem;">
                 Sign Up

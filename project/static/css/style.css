@@ -603,6 +603,15 @@ h1, h2, h3, h4, h5, h6 {
     margin-top: 1rem;
 }
 
+#description-content a {
+    color: #3ea6ff;
+    text-decoration: none;
+}
+
+#description-content a:hover {
+    text-decoration: underline;
+}
+
 .sidebar-title {
     font-size: 1.2rem;
     margin-bottom: 1.5rem;
@@ -723,7 +732,7 @@ h1, h2, h3, h4, h5, h6 {
    ========================================================================== */
 .footer {
     background-color: var(--bg-secondary);
-    padding: 3rem 0;
+    padding: 1.5rem 0;
     margin-top: auto;
     border-top: 1px solid rgba(255,255,255,0.05);
 }
@@ -756,9 +765,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .footer-bottom {
     text-align: center;
-    padding-top: 2rem;
-    margin-top: 2rem;
-    border-top: 1px solid rgba(255,255,255,0.05);
     color: var(--text-secondary);
     font-size: 0.9rem;
 }
@@ -820,4 +826,211 @@ h1, h2, h3, h4, h5, h6 {
     .suggested-thumbnail {
         width: 100%;
     }
+}
+/* =========================
+   FORGOT PASSWORD PAGE
+========================= */
+
+.forgot-wrapper{
+    width:100%;
+    min-height:100vh;
+    background:#000;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:60px 20px;
+}
+
+.forgot-card{
+    width:1100px;
+    background:#111;
+    border-radius:25px;
+    overflow:hidden;
+    display:flex;
+    box-shadow:0 0 40px rgba(0,0,0,0.6);
+    border:1px solid #222;
+}
+
+.forgot-left{
+    flex:1;
+    padding:70px;
+}
+
+.forgot-title{
+    color:white;
+    font-size:52px;
+    margin-bottom:20px;
+    font-weight:700;
+}
+
+.forgot-subtitle{
+    color:#aaa;
+    font-size:17px;
+    line-height:1.7;
+    margin-bottom:40px;
+}
+
+.forgot-group{
+    margin-bottom:25px;
+}
+
+.forgot-group label{
+    display:block;
+    color:white;
+    margin-bottom:10px;
+    font-size:16px;
+    font-weight:500;
+}
+
+.forgot-group input{
+    width:100%;
+    padding:18px;
+    background:#1d1d1d;
+    border:none;
+    border-radius:14px;
+    color:white;
+    font-size:16px;
+    border:2px solid transparent;
+    transition:0.3s;
+}
+
+.forgot-group input:focus{
+    outline:none;
+    border-color:red;
+    box-shadow:0 0 15px rgba(255,0,0,0.3);
+}
+
+.forgot-btn{
+    width:100%;
+    padding:18px;
+    background:red;
+    border:none;
+    border-radius:14px;
+    color:white;
+    font-size:18px;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+    margin-top:10px;
+}
+
+.forgot-btn:hover{
+    background:#cc0000;
+    transform:translateY(-2px);
+}
+
+.back-login{
+    display:inline-block;
+    margin-top:30px;
+    color:red;
+    text-decoration:none;
+    font-size:15px;
+}
+
+.forgot-right{
+    flex:1;
+    height:auto;
+}
+
+.forgot-right img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+    .forgot-card{
+        flex-direction:column;
+    }
+
+    .forgot-right{
+        height:300px;
+    }
+
+    .forgot-left{
+        padding:40px;
+    }
+
+    .forgot-title{
+        font-size:38px;
+    }
+
+}
+/* =========================
+   DJANGO ALERT MESSAGES
+========================= */
+
+.message-container{
+    position:fixed;
+    top:90px;
+    right:20px;
+    z-index:999999;
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.alert-message{
+    min-width:320px;
+    max-width:450px;
+    padding:16px 22px;
+    border-radius:14px;
+    color:white;
+    font-size:15px;
+    font-weight:500;
+    box-shadow:0 10px 30px rgba(0,0,0,0.4);
+
+    animation:
+        slideIn 0.4s ease,
+        fadeOut 0.5s ease 3s forwards;
+}
+
+/* SUCCESS */
+
+.alert-message.success{
+    background:#16a34a;
+    border-left:5px solid #22c55e;
+}
+
+/* ERROR */
+
+.alert-message.error{
+    background:#dc2626;
+    border-left:5px solid #ef4444;
+}
+
+/* WARNING */
+
+.alert-message.warning{
+    background:#ca8a04;
+    border-left:5px solid #facc15;
+}
+
+/* ANIMATION */
+
+@keyframes slideIn{
+
+    from{
+        opacity:0;
+        transform:translateX(100px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateX(0);
+    }
+
+}
+
+@keyframes fadeOut{
+
+    to{
+        opacity:0;
+        transform:translateY(-10px);
+        visibility:hidden;
+    }
+
 }
