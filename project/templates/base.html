@@ -5,105 +5,287 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Video Streaming Website{% endblock %}</title>
+
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <!-- Include icons like FontAwesome here if permitted, but strictly HTML/CSS means we can use HTML entities or SVG inline -->
+
 </head>
+
 <body>
 
-    <!-- Sticky Navbar -->
+    <!-- =========================
+            NAVBAR
+    ========================== -->
+
     <nav class="navbar">
+
         <div class="container">
+
+            <!-- LOGO -->
             <a href="{% url 'home' %}" class="navbar-brand">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="accent"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+
+                <svg 
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="accent"
+                >
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+
                 Stream<span class="accent">Vids</span>
+
             </a>
-            
+
+            <!-- NAV LINKS -->
             <ul class="nav-links">
-                <li><a href="{% url 'home' %}" class="nav-link active">Home</a></li>
-                <li><a href="#" class="nav-link">Trending</a></li>
-                <li><a href="#" class="nav-link">Subscriptions</a></li>
-                <li><a href="#" class="nav-link">Library</a></li>
+
+                <li>
+                    <a href="{% url 'home' %}" class="nav-link active">
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#" class="nav-link">
+                        Trending
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#" class="nav-link">
+                        Subscriptions
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#" class="nav-link">
+                        Library
+                    </a>
+                </li>
+
             </ul>
-            
+
+            <!-- RIGHT SIDE -->
             <div class="nav-actions">
+
+                <!-- UPLOAD BUTTON -->
                 <a href="{% url 'upload' %}" class="btn btn-primary">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 5px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+
+                    <svg 
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        style="margin-right: 5px;"
+                    >
+
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+
+                        <polyline points="17 8 12 3 7 8"></polyline>
+
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+
+                    </svg>
+
                     Upload
+
                 </a>
-                <!-- Django template logic for logged in user -->
+
+                <!-- USER LOGIN CHECK -->
                 {% if user.is_authenticated %}
+
+                <!-- PROFILE -->
                 <a href="{% url 'profile' %}" class="profile-avatar">
 
-                    <img src="https://ui-avatars.com/api/?name={{ user.username }}&background=e50914&color=fff">
+                    <img 
+                        src="https://ui-avatars.com/api/?name={{ user.username }}&background=e50914&color=fff"
+                        alt="Profile"
+                    >
 
                 </a>
-                <a href="{% url 'logout' %}" class="btn btn-outline">Logout</a>
+
+                <!-- LOGOUT -->
+                <a href="{% url 'logout' %}" class="btn btn-outline">
+
+                    Logout
+
+                </a>
+
                 {% else %}
-                <a href="{% url 'login' %}" class="btn btn-outline">Login</a>
-                {% comment %} <a href="{% url 'register' %}" class="btn btn-primary">Sign Up</a> {% endcomment %}
+
+                <!-- LOGIN -->
+                <a href="{% url 'login' %}" class="btn btn-outline">
+
+                    Login
+
+                </a>
+
                 {% endif %}
+
             </div>
-            
-            <!-- Mobile Menu Toggle (CSS Only approach) -->
+
+            <!-- MOBILE MENU -->
             <div class="menu-toggle">
+
                 <span></span>
                 <span></span>
                 <span></span>
+
             </div>
+
         </div>
+
     </nav>
 
-    <!-- Main Content -->
+    <!-- =========================
+         DJANGO MESSAGES
+    ========================== -->
+
+    {% if messages %}
+
+    <div class="message-container">
+
+        {% for message in messages %}
+
+            <div class="alert-message {{ message.tags }}">
+
+                {{ message }}
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+    {% endif %}
+
+    <!-- =========================
+           MAIN CONTENT
+    ========================== -->
+
     <main class="main-content">
+
         {% block content %}
         {% endblock %}
+
     </main>
 
-    <!-- Footer -->
+    <!-- =========================
+              FOOTER
+    ========================== -->
+
     <footer class="footer">
+
         <div class="container">
+
             <div class="footer-content">
+
+                <!-- FOOTER LOGO -->
                 <div class="footer-col">
+
                     <a href="{% url 'home' %}" class="navbar-brand" style="margin-bottom: 1rem;">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="accent"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+
+                        <svg 
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            class="accent"
+                        >
+
+                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+
+                        </svg>
+
                         Stream<span class="accent">Vids</span>
+
                     </a>
+
                     <p style="color: var(--text-secondary); font-size: 0.9rem;">
+
                         The best place to watch and share videos online.
+
                     </p>
+
                 </div>
+
+                <!-- QUICK LINKS -->
                 <div class="footer-col">
+
                     <h3>Quick Links</h3>
+
                     <div class="footer-links">
+
                         <a href="#">About Us</a>
+
                         <a href="#">Careers</a>
+
                         <a href="#">Press</a>
+
                         <a href="#">Copyright</a>
+
                     </div>
+
                 </div>
+
+                <!-- SUPPORT -->
                 <div class="footer-col">
+
                     <h3>Support</h3>
+
                     <div class="footer-links">
+
                         <a href="#">Help Center</a>
+
                         <a href="#">Terms of Service</a>
+
                         <a href="#">Privacy Policy</a>
+
                         <a href="#">Guidelines</a>
+
                     </div>
+
                 </div>
+
+                <!-- CONNECT -->
                 <div class="footer-col">
+
                     <h3>Connect</h3>
+
                     <div class="footer-links">
+
                         <a href="#">Twitter</a>
+
                         <a href="#">Instagram</a>
+
                         <a href="#">Facebook</a>
+
                         <a href="#">Contact Us</a>
+
                     </div>
+
                 </div>
+
             </div>
+
+            <!-- FOOTER BOTTOM -->
             <div class="footer-bottom">
-                &copy; {% now "Y" %} StreamVids. All rights reserved. Built with HTML & CSS.
+
+                &copy; {% now "Y" %} StreamVids. All rights reserved.
+
             </div>
+
         </div>
+
     </footer>
 
 </body>

@@ -953,3 +953,78 @@ h1, h2, h3, h4, h5, h6 {
     }
 
 }
+/* =========================
+   DJANGO ALERT MESSAGES
+========================= */
+
+.message-container{
+    position:fixed;
+    top:90px;
+    right:20px;
+    z-index:999999;
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.alert-message{
+    min-width:320px;
+    max-width:450px;
+    padding:16px 22px;
+    border-radius:14px;
+    color:white;
+    font-size:15px;
+    font-weight:500;
+    box-shadow:0 10px 30px rgba(0,0,0,0.4);
+
+    animation:
+        slideIn 0.4s ease,
+        fadeOut 0.5s ease 3s forwards;
+}
+
+/* SUCCESS */
+
+.alert-message.success{
+    background:#16a34a;
+    border-left:5px solid #22c55e;
+}
+
+/* ERROR */
+
+.alert-message.error{
+    background:#dc2626;
+    border-left:5px solid #ef4444;
+}
+
+/* WARNING */
+
+.alert-message.warning{
+    background:#ca8a04;
+    border-left:5px solid #facc15;
+}
+
+/* ANIMATION */
+
+@keyframes slideIn{
+
+    from{
+        opacity:0;
+        transform:translateX(100px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateX(0);
+    }
+
+}
+
+@keyframes fadeOut{
+
+    to{
+        opacity:0;
+        transform:translateY(-10px);
+        visibility:hidden;
+    }
+
+}
