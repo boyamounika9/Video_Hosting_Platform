@@ -953,3 +953,51 @@ h1, h2, h3, h4, h5, h6 {
     }
 
 }
+/* =========================
+   DJANGO MESSAGES
+========================= */
+
+.message-container{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    margin-top:20px;
+    gap:15px;
+}
+
+.alert-message{
+    width:90%;
+    max-width:600px;
+    padding:16px 20px;
+    border-radius:12px;
+    font-size:16px;
+    font-weight:500;
+    animation:slideDown 0.4s ease;
+}
+
+.alert-message.success{
+    background:#0f5132;
+    color:#d1e7dd;
+    border:1px solid #198754;
+}
+
+.alert-message.error{
+    background:#58151c;
+    color:#f8d7da;
+    border:1px solid #dc3545;
+}
+
+@keyframes slideDown{
+
+    from{
+        opacity:0;
+        transform:translateY(-20px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
