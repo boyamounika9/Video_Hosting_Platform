@@ -954,50 +954,77 @@ h1, h2, h3, h4, h5, h6 {
 
 }
 /* =========================
-   DJANGO MESSAGES
+   DJANGO ALERT MESSAGES
 ========================= */
 
 .message-container{
-    width:100%;
+    position:fixed;
+    top:90px;
+    right:20px;
+    z-index:999999;
     display:flex;
     flex-direction:column;
-    align-items:center;
-    margin-top:20px;
     gap:15px;
 }
 
 .alert-message{
-    width:90%;
-    max-width:600px;
-    padding:16px 20px;
-    border-radius:12px;
-    font-size:16px;
+    min-width:320px;
+    max-width:450px;
+    padding:16px 22px;
+    border-radius:14px;
+    color:white;
+    font-size:15px;
     font-weight:500;
-    animation:slideDown 0.4s ease;
+    box-shadow:0 10px 30px rgba(0,0,0,0.4);
+
+    animation:
+        slideIn 0.4s ease,
+        fadeOut 0.5s ease 3s forwards;
 }
+
+/* SUCCESS */
 
 .alert-message.success{
-    background:#0f5132;
-    color:#d1e7dd;
-    border:1px solid #198754;
+    background:#16a34a;
+    border-left:5px solid #22c55e;
 }
+
+/* ERROR */
 
 .alert-message.error{
-    background:#58151c;
-    color:#f8d7da;
-    border:1px solid #dc3545;
+    background:#dc2626;
+    border-left:5px solid #ef4444;
 }
 
-@keyframes slideDown{
+/* WARNING */
+
+.alert-message.warning{
+    background:#ca8a04;
+    border-left:5px solid #facc15;
+}
+
+/* ANIMATION */
+
+@keyframes slideIn{
 
     from{
         opacity:0;
-        transform:translateY(-20px);
+        transform:translateX(100px);
     }
 
     to{
         opacity:1;
-        transform:translateY(0);
+        transform:translateX(0);
+    }
+
+}
+
+@keyframes fadeOut{
+
+    to{
+        opacity:0;
+        transform:translateY(-10px);
+        visibility:hidden;
     }
 
 }

@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-
 
 
 def register(request):
@@ -17,16 +16,16 @@ def register(request):
         # PASSWORD CHECK
         if password != cpassword:
 
-            messages.error(request, 'Password and Confirm Password are not equal')
+            messages.error(request, 'Passwords are not matching')
 
-            return redirect('register')
+            return render(request, 'register.html')
 
-        # USER ALREADY EXISTS
+        # USER EXISTS
         if User.objects.filter(username=username).exists():
 
             messages.error(request, 'Username already exists')
 
-            return redirect('register')
+            return render(request, 'register.html')
 
         # CREATE USER
         User.objects.create_user(
@@ -40,7 +39,6 @@ def register(request):
         return redirect('login')
 
     return render(request, 'register.html')
-
 
 def login_view(request):
 
@@ -67,10 +65,16 @@ def login_view(request):
 
             messages.error(request, 'Invalid Username or Password')
 
-            return redirect('login')
+            return render(request, 'login.html')
 
     return render(request, 'login.html')
 
+# LOGOUT
+
 def logout_view(request):
+
     logout(request)
+
+    messages.success(request, 'Logout Successful')
+
     return redirect('login')
