@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: video-streaming-platform
+    env: python
+    region: singapore  # closest to ap-south-1 (India)
+    plan: free
+    rootDir: .
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn project.wsgi:application --chdir project --bind 0.0.0.0:$PORT"
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true          # Render auto-generates a secure secret key
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: ".onrender.com"
+      - key: CSRF_TRUSTED_ORIGINS
+        value: "https://*.onrender.com"
+      - key: AWS_ACCESS_KEY_ID
+        sync: false                  # Set manually in Render dashboard
+      - key: AWS_SECRET_ACCESS_KEY
+        sync: false                  # Set manually in Render dashboard
+      - key: AWS_STORAGE_BUCKET_NAME
+        value: streamvids-media
+      - key: AWS_S3_REGION_NAME
+        value: ap-south-1
+      - key: PYTHON_VERSION
+        value: "3.11.0"
