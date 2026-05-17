@@ -89,37 +89,10 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 # project/settings.py
 
-import boto3
-import json
-from botocore.exceptions import ClientError
-
-def get_db_secret():
-    secret_name = "rds!cluster-d2c54a79-09a9-4e11-b654-652b3d6033c6"
-    region_name = "ap-south-1"
-    
-    session = boto3.session.Session()
-    client = session.client(
-        service_name='secretsmanager',
-        region_name=region_name
-    )
-    
-    try:
-        response = client.get_secret_value(SecretId=secret_name)
-        return json.loads(response['SecretString'])
-    except ClientError as e:
-        print(f"Error fetching AWS Secret: {e}")
-        return {}
-
-db_credentials = get_db_secret()
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'streamvids',
-        'USER': 'admin',
-        'PASSWORD': db_credentials.get('password', 'your_password'),
-        'HOST': 'database-1.cluster-cn0ksauygrtn.ap-south-1.rds.amazonaws.com',
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -162,24 +135,19 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-# AWS S3 Settings (loaded from environment variables - never hardcode secrets!)
-AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID', default='')
-AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY', default='')
-AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME', default='streamvids-media')
-AWS_S3_REGION_NAME = env('AWS_S3_REGION_NAME', default='ap-south-1')
-AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+# Media files (Uploaded videos and thumbnails)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
-# Tell Django to use S3 for media files (videos & thumbnails) and WhiteNoise for static files
+# Tell Django to use local storage for media files and WhiteNoise for static files
 STORAGES = {
     "default": {
-        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
     },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
-
-MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/'
 
 
 # Login & Logout Redirects
