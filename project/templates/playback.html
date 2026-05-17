@@ -14,6 +14,8 @@
 
                 <video class="video-player"
                        controls
+                       controlsList="nodownload"
+                       oncontextmenu="return false;"
                        poster="{{ video.thumbnail.url }}">
 
                     <source src="{{ video.video_file.url }}"
