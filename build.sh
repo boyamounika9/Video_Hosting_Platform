@@ -10,3 +10,6 @@ python project/manage.py collectstatic --no-input
 
 # Run database migrations
 python project/manage.py migrate
+
+# Create superuser automatically from environment variables (for Render Free Tier)
+python project/manage.py createsuperuser --noinput || true
