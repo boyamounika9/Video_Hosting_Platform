@@ -326,4 +326,4 @@ AWS_S3_REGION_NAME=ap-south-1
 
 ## 📄 License
 
-This project is for educational purposes. All rights reserved © 2026 StreamVids Team.
+This project is for educational purposes. All rights reserved © 2026 StreamVids Team.pair achievement test
