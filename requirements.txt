@@ -8,6 +8,7 @@ gunicorn==21.2.0
 jmespath==1.1.0
 mysqlclient>=2.2.1
 pillow==11.3.0
+psycopg2-binary>=2.9.9
 python-dateutil==2.9.0.post0
 s3transfer==0.16.1
 six==1.17.0
