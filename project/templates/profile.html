@@ -110,12 +110,24 @@
                 </div>
 
                 {% if i.uploaded_by == request.user %}
-                <form method="POST" action="{% url 'delete_video' i.id %}" onsubmit="return confirm('Are you sure you want to delete this video forever?');" style="position: absolute; right: 0; top: 0;">
-                    {% csrf_token %}
-                    <button type="submit" style="background: none; border: none; color: var(--text-secondary); cursor: pointer; padding: 0.5rem;" title="Delete forever" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-secondary)'">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                <div class="dropdown" style="position: absolute; right: 0; top: 0;">
+                    <button type="button" class="dropbtn" onclick="event.preventDefault(); document.getElementById('dropdown-{{ i.id }}').style.display = document.getElementById('dropdown-{{ i.id }}').style.display === 'block' ? 'none' : 'block';" style="background: none; border: none; color: var(--text-secondary); cursor: pointer; padding: 0.5rem;" title="Options">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
                     </button>
-                </form>
+                    <div id="dropdown-{{ i.id }}" class="dropdown-content" style="display: none; position: absolute; right: 0; background-color: var(--bg-secondary); min-width: 120px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5); z-index: 10; border-radius: 4px; border: 1px solid rgba(255,255,255,0.1);">
+                        <a href="{% url 'edit_video' i.id %}" style="color: var(--text-primary); padding: 12px 16px; text-decoration: none; display: flex; align-items: center; gap: 8px; font-size: 0.9rem;" onmouseover="this.style.backgroundColor='rgba(255,255,255,0.05)'" onmouseout="this.style.backgroundColor='transparent'">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            Edit
+                        </a>
+                        <form method="POST" action="{% url 'delete_video' i.id %}" onsubmit="return confirm('Are you sure you want to delete this video forever?');" style="margin: 0;">
+                            {% csrf_token %}
+                            <button type="submit" style="width: 100%; text-align: left; background: none; border: none; border-top: 1px solid rgba(255,255,255,0.05); color: var(--text-primary); padding: 12px 16px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.9rem;" onmouseover="this.style.backgroundColor='rgba(255,255,255,0.05)'" onmouseout="this.style.backgroundColor='transparent'">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                Delete
+                            </button>
+                        </form>
+                    </div>
+                </div>
                 {% endif %}
 
             </div>
@@ -129,3 +141,17 @@
 </div>
 
 {% endblock %}
+<script>
+// Close dropdowns if clicked outside
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn') && !event.target.closest('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    for (var i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.style.display === 'block') {
+        openDropdown.style.display = 'none';
+      }
+    }
+  }
+}
+</script>
