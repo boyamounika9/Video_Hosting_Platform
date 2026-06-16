@@ -6,7 +6,7 @@
 ![Python](https://img.shields.io/badge/Python-3.9+-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![SQLite](https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white)
 
-**A full-stack video streaming web application built with Django, using local file storage and SQLite.**
+**A full-stack video hosting web application built with Django, using local file storage and SQLite.**
 
 [Features](#-features) • [Architecture](#-architecture) • [Tech Stack](#-tech-stack) • [Setup](#-local-setup) • [Project Structure](#-project-structure)
 
