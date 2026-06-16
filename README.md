@@ -1,15 +1,14 @@
-# 🎬 StreamVids — Cloud-Native Video Hosting Platform
+# 🎬 StreamVids — Video Hoisting Platform
 
 <div align="center">
 
 ![Django](https://img.shields.io/badge/Django-4.2.30-092E20?style=for-the-badge&logo=django&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3.9+-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![AWS S3](https://img.shields.io/badge/AWS_S3-Media_Storage-FF9900?style=for-the-badge&logo=amazons3&logoColor=white)
 ![SQLite](https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white)
 
-**A full-stack video streaming web application built with Django, backed by AWS cloud services for scalable media storage and database management.**
+**A full-stack video streaming web application built with Django, using local file storage and SQLite.**
 
-[Features](#-features) • [Architecture](#-architecture) • [Tech Stack](#-tech-stack) • [Setup](#-local-setup) • [AWS Config](#-aws-configuration) • [Project Structure](#-project-structure)
+[Features](#-features) • [Architecture](#-architecture) • [Tech Stack](#-tech-stack) • [Setup](#-local-setup) • [Project Structure](#-project-structure)
 
 </div>
 
@@ -17,7 +16,7 @@
 
 ## 📸 Overview
 
-StreamVids is a YouTube-inspired video hosting platform where users can register, upload videos with thumbnails, browse content on the homepage, and watch videos on a dedicated playback page. All media files are stored on **AWS S3** and the database uses **SQLite** for easier local deployment and portability.
+StreamVids is a YouTube-inspired video hosting platform where users can register, upload videos with thumbnails, browse content on the homepage, and watch videos on a dedicated playback page. All media files are stored locally and the database uses **SQLite** for easier deployment and portability.
 
 ---
 
@@ -26,12 +25,11 @@ StreamVids is a YouTube-inspired video hosting platform where users can register
 | Feature | Description |
 |---|---|
 | 🔐 **Authentication** | Register, Login, Logout with Django's built-in auth system |
-| 🎥 **Video Upload** | Upload MP4 videos with thumbnails directly to AWS S3 |
+| 🎥 **Video Upload** | Upload MP4 videos with thumbnails directly to local storage |
 | 🏠 **Homepage Feed** | Browse all uploaded videos in a card-grid layout |
 | ▶️ **Video Playback** | Dedicated playback page with HTML5 video player |
 | 👤 **User Profile** | View all videos uploaded by the logged-in user |
 | 🔒 **Forgot Password** | Password reset functionality |
-| ☁️ **AWS S3 Storage** | All media (videos & thumbnails) served from S3 |
 | 🗄️ **SQLite DB** | Default lightweight database for the platform |
 | 🟢 **Health Check** | Dedicated `/health/` endpoint for monitoring and cron jobs |
 | 🌙 **Dark UI** | Netflix-inspired dark theme with responsive design |
@@ -59,7 +57,7 @@ StreamVids is a YouTube-inspired video hosting platform where users can register
 └─────────────────────┼─────────────┼──────────────────────┘
                       │             │
           ┌───────────▼──┐    ┌─────▼──────────┐
-          │  AWS S3      │    │  SQLite         │
+          │  Local FS    │    │  SQLite         │
           │  (Media)     │    │  (db.sqlite3)   │
           │  - videos/   │    │                 │
           │  - thumbnails│    │                 │
@@ -73,16 +71,13 @@ StreamVids is a YouTube-inspired video hosting platform where users can register
 ### Backend
 - **Django 4.2.30** — Web framework
 - **Python 3.9+** — Programming language
-- **mysqlclient** — MySQL database adapter
-- **boto3** — AWS SDK for Python
-- **django-storages** — S3 file storage backend
 - **Pillow** — Image processing for thumbnails
 
 ### Database
 - **SQLite3** — Lightweight, local relational database
 
 ### Storage
-- **AWS S3** (`streamvids-media`) — Object storage for videos and thumbnails
+- **Local File System** (`media/`) — Local storage for videos and thumbnails
 
 ### Frontend
 - **HTML5 / CSS3 / Vanilla JS** — No frameworks, hand-crafted UI
@@ -94,13 +89,12 @@ StreamVids is a YouTube-inspired video hosting platform where users can register
 ## 📁 Project Structure
 
 ```
-Video_Hosting_Platform/
+Video_Hoisting_Platform/
 ├── .venv/                        # Python virtual environment
 ├── requirements.txt              # Python dependencies
 ├── README.md
 └── project/                      # Django root
     ├── manage.py
-    ├── .env                      # ⚠️ Local secrets (not committed)
     ├── static/
     │   ├── css/
     │   │   └── style.css         # Global dark-theme stylesheet
@@ -134,8 +128,6 @@ Video_Hosting_Platform/
 |---|---|---|
 | Python | 3.9+ | [python.org](https://python.org/downloads) |
 | Git | Latest | [git-scm.com](https://git-scm.com) |
-| MySQL Client | 8.0+ | [dev.mysql.com](https://dev.mysql.com/downloads/installer) |
-| AWS CLI | Latest | [aws.amazon.com/cli](https://aws.amazon.com/cli/) |
 
 ---
 
@@ -143,8 +135,8 @@ Video_Hosting_Platform/
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/boyamounika9/Video_Hosting_Platform.git
-cd Video_Hosting_Platform
+git clone https://github.com/boyamounika9/Video_Hoisting_Platform.git
+cd Video_Hoisting_Platform
 
 # 2. Create and activate virtual environment
 python3 -m venv .venv
@@ -153,21 +145,10 @@ source .venv/bin/activate
 # 3. Install dependencies
 pip install -r requirements.txt
 
-# 4. Create .env file inside project/ folder
-cat > project/.env << EOF
-AWS_ACCESS_KEY_ID=your_access_key_id
-AWS_SECRET_ACCESS_KEY=your_secret_access_key
-AWS_STORAGE_BUCKET_NAME=streamvids-media
-AWS_S3_REGION_NAME=ap-south-1
-EOF
-
-# 5. Configure AWS CLI
-aws configure
-
-# 6. Run migrations and start server
+# 4. Run migrations and start server
 cd project
-export $(cat .env | xargs) && python manage.py migrate
-export $(cat .env | xargs) && python manage.py runserver
+python manage.py migrate
+python manage.py runserver
 ```
 
 ---
@@ -176,8 +157,8 @@ export $(cat .env | xargs) && python manage.py runserver
 
 ```cmd
 :: 1. Clone the repository
-git clone https://github.com/boyamounika9/Video_Hosting_Platform.git
-cd Video_Hosting_Platform
+git clone https://github.com/boyamounika9/Video_Hoisting_Platform.git
+cd Video_Hoisting_Platform
 
 :: 2. Create and activate virtual environment
 python -m venv .venv
@@ -186,58 +167,10 @@ python -m venv .venv
 :: 3. Install dependencies
 pip install -r requirements.txt
 
-:: 4. Create .env file inside project\ folder (or create manually)
-::    File: project\.env
-::    Content:
-::    AWS_ACCESS_KEY_ID=your_access_key_id
-::    AWS_SECRET_ACCESS_KEY=your_secret_access_key
-::    AWS_STORAGE_BUCKET_NAME=streamvids-media
-::    AWS_S3_REGION_NAME=ap-south-1
-
-:: 5. Configure AWS CLI
-aws configure
-
-:: 6. Set environment variables and run
+:: 4. Run migrations and start server
 cd project
-set AWS_ACCESS_KEY_ID=your_access_key_id
-set AWS_SECRET_ACCESS_KEY=your_secret_access_key
-set AWS_STORAGE_BUCKET_NAME=streamvids-media
-set AWS_S3_REGION_NAME=ap-south-1
 python manage.py migrate
 python manage.py runserver
-```
-
-> ⚠️ **Windows note:** If `mysqlclient` fails to install, run:
-> ```cmd
-> pip install mysqlclient --only-binary=mysqlclient
-> ```
-
----
-
-## ☁️ AWS Configuration
-
-### Required AWS Services
-
-| Service | Purpose | Details |
-|---|---|---|
-| **IAM** | Access control | Create an IAM user with `AmazonS3FullAccess` |
-| **S3** | Media storage | Bucket: `streamvids-media`, Region: `ap-south-1`, Public read policy |
-
-### S3 Bucket Policy (Public Read)
-
-```json
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "PublicReadGetObject",
-            "Effect": "Allow",
-            "Principal": "*",
-            "Action": "s3:GetObject",
-            "Resource": "arn:aws:s3:::streamvids-media/*"
-        }
-    ]
-}
 ```
 
 ---
@@ -250,8 +183,8 @@ python manage.py runserver
 |---|---|---|
 | `title` | `CharField(200)` | Video title |
 | `description` | `TextField` | Video description |
-| `video_file` | `FileField` | Stored in S3 at `videos/` |
-| `thumbnail` | `ImageField` | Stored in S3 at `thumbnails/` |
+| `video_file` | `FileField` | Stored locally at `videos/` |
+| `thumbnail` | `ImageField` | Stored locally at `thumbnails/` |
 | `upload_time` | `DateTimeField` | Auto-set on upload (IST) |
 | `uploaded_by` | `ForeignKey(User)` | Linked to Django auth user |
 
@@ -273,28 +206,13 @@ python manage.py runserver
 
 ---
 
-## 🔐 Environment Variables
-
-Create a `.env` file in the `project/` directory:
-
-```env
-AWS_ACCESS_KEY_ID=your_iam_access_key
-AWS_SECRET_ACCESS_KEY=your_iam_secret_key
-AWS_STORAGE_BUCKET_NAME=streamvids-media
-AWS_S3_REGION_NAME=ap-south-1
-```
-
-> 🔒 **Never commit this file to Git.** It is already listed in `.gitignore`.
-
----
-
 ## 🚀 Deployment Notes
 
 - Set `DEBUG = False` in `settings.py` before deploying to production
 - Add your domain to `ALLOWED_HOSTS`
 - Set a strong, random `SECRET_KEY` via environment variable
 - Use `python manage.py collectstatic` to collect static files
-- Consider using **Gunicorn + Nginx** or **AWS Elastic Beanstalk** for hosting
+- Consider using **Gunicorn + Nginx** or **Render** for hosting
 
 ---
 
@@ -309,4 +227,4 @@ AWS_S3_REGION_NAME=ap-south-1
 
 ## 📄 License
 
-This project is for educational purposes. All rights reserved © 2026 StreamVids Team.pair achievement test
+This project is for educational purposes. All rights reserved © 2026 StreamVids Team.
