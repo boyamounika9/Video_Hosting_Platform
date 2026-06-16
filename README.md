@@ -1,4 +1,4 @@
-# 🎬 StreamVids — Cloud-Native Video Streaming Platform
+# 🎬 StreamVids — Cloud-Native Video Hosting Platform
 
 <div align="center">
 
@@ -17,7 +17,7 @@
 
 ## 📸 Overview
 
-StreamVids is a YouTube-inspired video streaming platform where users can register, upload videos with thumbnails, browse content on the homepage, and watch videos on a dedicated playback page. All media files are stored on **AWS S3** and the database uses **SQLite** for easier local deployment and portability.
+StreamVids is a YouTube-inspired video hosting platform where users can register, upload videos with thumbnails, browse content on the homepage, and watch videos on a dedicated playback page. All media files are stored on **AWS S3** and the database uses **SQLite** for easier local deployment and portability.
 
 ---
 
@@ -94,7 +94,7 @@ StreamVids is a YouTube-inspired video streaming platform where users can regist
 ## 📁 Project Structure
 
 ```
-Video_Streaming_Platform/
+Video_Hosting_Platform/
 ├── .venv/                        # Python virtual environment
 ├── requirements.txt              # Python dependencies
 ├── README.md
@@ -143,8 +143,8 @@ Video_Streaming_Platform/
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/boyamounika9/Video_Streaming_Platform.git
-cd Video_Streaming_Platform
+git clone https://github.com/boyamounika9/Video_Hosting_Platform.git
+cd Video_Hosting_Platform
 
 # 2. Create and activate virtual environment
 python3 -m venv .venv
@@ -176,8 +176,8 @@ export $(cat .env | xargs) && python manage.py runserver
 
 ```cmd
 :: 1. Clone the repository
-git clone https://github.com/boyamounika9/Video_Streaming_Platform.git
-cd Video_Streaming_Platform
+git clone https://github.com/boyamounika9/Video_Hosting_Platform.git
+cd Video_Hosting_Platform
 
 :: 2. Create and activate virtual environment
 python -m venv .venv

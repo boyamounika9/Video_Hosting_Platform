@@ -12,8 +12,8 @@
 
 ### **Step 2 — Clone & Setup**
 ```cmd
-git clone https://github.com/boyamounika9/Video_Streaming_Platform.git
-cd Video_Streaming_Platform
+git clone https://github.com/boyamounika9/Video_Hosting_Platform.git
+cd Video_Hosting_Platform
 
 python -m venv .venv
 .venv\Scripts\activate
