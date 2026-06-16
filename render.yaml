@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: video-hoisting-platform
+    name: video-hosting-platform
     env: python
     region: singapore  # closest to ap-south-1 (India)
     plan: free

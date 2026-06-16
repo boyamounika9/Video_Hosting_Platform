@@ -1,4 +1,4 @@
-# 🎬 StreamVids — Video Hoisting Platform
+# 🎬 VidVault — Video Hoisting Platform
 
 <div align="center">
 
@@ -16,7 +16,7 @@
 
 ## 📸 Overview
 
-StreamVids is a YouTube-inspired video hosting platform where users can register, upload videos with thumbnails, browse content on the homepage, and watch videos on a dedicated playback page. All media files are stored locally and the database uses **SQLite** for easier deployment and portability.
+VidVault is a YouTube-inspired video hosting platform where users can register, upload videos with thumbnails, browse content on the homepage, and watch videos on a dedicated playback page. All media files are stored locally and the database uses **SQLite** for easier deployment and portability.
 
 ---
 
@@ -33,7 +33,7 @@ StreamVids is a YouTube-inspired video hosting platform where users can register
 | 🗄️ **SQLite DB** | Default lightweight database for the platform |
 | 🟢 **Health Check** | Dedicated `/health/` endpoint for monitoring and cron jobs |
 | 🌙 **Dark UI** | Netflix-inspired dark theme with responsive design |
-| 🖼️ **Favicon** | Custom StreamVids play-button favicon |
+| 🖼️ **Favicon** | Custom VidVault play-button favicon |
 | 🕐 **IST Timezone** | All timestamps shown in Indian Standard Time (IST) |
 
 ---
@@ -89,7 +89,7 @@ StreamVids is a YouTube-inspired video hosting platform where users can register
 ## 📁 Project Structure
 
 ```
-Video_Hoisting_Platform/
+Video_Hosting_Platform/
 ├── .venv/                        # Python virtual environment
 ├── requirements.txt              # Python dependencies
 ├── README.md
@@ -98,7 +98,7 @@ Video_Hoisting_Platform/
     ├── static/
     │   ├── css/
     │   │   └── style.css         # Global dark-theme stylesheet
-    │   └── favicon.png           # StreamVids favicon
+    │   └── favicon.png           # VidVault favicon
     ├── templates/                # Global HTML templates
     │   ├── base.html             # Base layout (header, footer)
     │   ├── home.html             # Homepage video feed
@@ -135,8 +135,8 @@ Video_Hoisting_Platform/
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/boyamounika9/Video_Hoisting_Platform.git
-cd Video_Hoisting_Platform
+git clone https://github.com/boyamounika9/Video_Hosting_Platform.git
+cd Video_Hosting_Platform
 
 # 2. Create and activate virtual environment
 python3 -m venv .venv
@@ -157,8 +157,8 @@ python manage.py runserver
 
 ```cmd
 :: 1. Clone the repository
-git clone https://github.com/boyamounika9/Video_Hoisting_Platform.git
-cd Video_Hoisting_Platform
+git clone https://github.com/boyamounika9/Video_Hosting_Platform.git
+cd Video_Hosting_Platform
 
 :: 2. Create and activate virtual environment
 python -m venv .venv
@@ -227,4 +227,4 @@ python manage.py runserver
 
 ## 📄 License
 
-This project is for educational purposes. All rights reserved © 2026 StreamVids Team.
+This project is for educational purposes. All rights reserved © 2026 VidVault Team.

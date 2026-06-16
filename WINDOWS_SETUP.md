@@ -9,8 +9,8 @@
 
 ### **Step 2 — Clone & Setup**
 ```cmd
-git clone https://github.com/boyamounika9/Video_Hoisting_Platform.git
-cd Video_Hoisting_Platform
+git clone https://github.com/boyamounika9/Video_Hosting_Platform.git
+cd Video_Hosting_Platform
 
 python -m venv .venv
 .venv\Scripts\activate
