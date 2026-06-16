@@ -6,7 +6,7 @@ services:
     plan: free
     rootDir: .
     buildCommand: "./build.sh"
-    startCommand: "gunicorn project.wsgi:application --chdir project --bind 0.0.0.0:$PORT"
+    startCommand: "gunicorn project.wsgi:application --chdir project --bind 0.0.0.0:$PORT --timeout 120"
     envVars:
       - key: SECRET_KEY
         generateValue: true          # Render auto-generates a secure secret key
