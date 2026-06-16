@@ -6,12 +6,25 @@
 {% block content %}
 <div class="container">
     <div class="glass-card upload-card" style="margin-top: 2rem; margin-bottom: 2rem;">
-        <div class="auth-header" style="text-align: left; margin-bottom: 2.5rem;">
+        <div class="auth-header" style="text-align: left; margin-bottom: 1rem;">
             <h1 class="auth-title">Upload Video</h1>
             <p class="auth-subtitle">Share your content with the world.</p>
         </div>
+
+        <div style="background-color: rgba(255, 255, 255, 0.05); border-left: 4px solid var(--accent); padding: 1rem; border-radius: 4px; margin-bottom: 2rem;">
+            <h4 style="margin-bottom: 0.5rem; color: #fff;">Upload Guidelines:</h4>
+            <ul style="color: var(--text-secondary); font-size: 0.9rem; margin-left: 1.5rem;">
+                <li>Supported video formats: <strong>MP4, M4V, WEBM, MOV</strong>.</li>
+                <li>Thumbnail must be a <strong>JPG or PNG</strong> (Max size: 2MB).</li>
+                <li>Keep the browser tab open while the upload progress bar is active.</li>
+            </ul>
+        </div>
         
-        <form method="POST" enctype="multipart/form-data" action="">
+        <!-- Dynamic Error Container for AJAX -->
+        <div id="js-error-container" style="display: none; background-color: rgba(229, 9, 20, 0.1); border: 1px solid var(--accent); color: #fff; padding: 1rem; border-radius: 8px; margin-bottom: 2rem;">
+        </div>
+
+        <form id="upload-form" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
@@ -53,10 +66,16 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Progress Bar -->
+            <div id="progress-container" class="progress-container">
+                <div id="progress-bar" class="progress-bar"></div>
+            </div>
+            <div id="progress-text" class="progress-text">0% Uploaded</div>
             
             <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-end; gap: 1rem;">
                 <a href="{% url 'home' %}" class="btn btn-outline">Cancel</a>
-                <button type="submit" class="btn btn-primary" style="padding: 0.8rem 2rem; font-size: 1.1rem;">Upload Video</button>
+                <button type="submit" id="submit-btn" class="btn btn-primary" style="padding: 0.8rem 2rem; font-size: 1.1rem;">Upload Video</button>
             </div>
         </form>
     </div>
@@ -77,6 +96,80 @@
             const btnElement = this.parentElement.querySelector('button');
             if(btnElement) btnElement.textContent = 'Thumbnail: ' + fileName;
         }
+    });
+
+    document.getElementById('upload-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const form = this;
+        const formData = new FormData(form);
+        const submitBtn = document.getElementById('submit-btn');
+        const progressContainer = document.getElementById('progress-container');
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+        const errorContainer = document.getElementById('js-error-container');
+
+        // Reset UI
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Uploading...';
+        progressContainer.style.display = 'block';
+        progressText.style.display = 'block';
+        progressBar.style.width = '0%';
+        progressText.textContent = '0% Uploaded';
+        errorContainer.style.display = 'none';
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', window.location.href, true);
+        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+        xhr.upload.onprogress = function(e) {
+            if (e.lengthComputable) {
+                const percentComplete = Math.round((e.loaded / e.total) * 100);
+                progressBar.style.width = percentComplete + '%';
+                progressText.textContent = percentComplete + '% Uploaded';
+                if (percentComplete === 100) {
+                    progressText.textContent = 'Processing video... Please wait.';
+                }
+            }
+        };
+
+        xhr.onload = function() {
+            if (xhr.status >= 200 && xhr.status < 400) {
+                try {
+                    const response = JSON.parse(xhr.responseText);
+                    if (response.status === 'success') {
+                        window.location.href = response.redirect_url || '/';
+                    } else {
+                        showError(response.message || 'Unknown error occurred.');
+                    }
+                } catch (err) {
+                    // Fallback if not JSON (e.g. Django redirect)
+                    window.location.href = '/';
+                }
+            } else {
+                try {
+                    const response = JSON.parse(xhr.responseText);
+                    showError(response.message || 'Server returned an error.');
+                } catch (err) {
+                    showError('Upload failed: ' + xhr.status + ' ' + xhr.statusText);
+                }
+            }
+        };
+
+        xhr.onerror = function() {
+            showError('Network error occurred during upload. Please check your connection.');
+        };
+
+        function showError(msg) {
+            errorContainer.textContent = msg;
+            errorContainer.style.display = 'block';
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Upload Video';
+            progressContainer.style.display = 'none';
+            progressText.style.display = 'none';
+        }
+
+        xhr.send(formData);
     });
 </script>
 {% endblock %}
