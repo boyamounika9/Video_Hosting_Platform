@@ -16,13 +16,5 @@ services:
         value: ".onrender.com"
       - key: CSRF_TRUSTED_ORIGINS
         value: "https://*.onrender.com"
-      - key: AWS_ACCESS_KEY_ID
-        sync: false                  # Set manually in Render dashboard
-      - key: AWS_SECRET_ACCESS_KEY
-        sync: false                  # Set manually in Render dashboard
-      - key: AWS_STORAGE_BUCKET_NAME
-        value: streamvids-media
-      - key: AWS_S3_REGION_NAME
-        value: ap-south-1
       - key: PYTHON_VERSION
         value: "3.11.0"
